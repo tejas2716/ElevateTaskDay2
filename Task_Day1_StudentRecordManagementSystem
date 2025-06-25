@@ -1,48 +1,69 @@
 package com.elevate_Internship_day_2;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-// Student class
-class Student {
+// Step 4.1: Define custom exception for invalid marks
+class InvalidMarks extends Exception {
+    // Empty class used as marker for validation
+}
+
+// Step 4.2: Student class with validation
+class Student extends Exception {
     int id;
     String name;
     double marks;
 
-    public Student(int id, String name, double marks) {
+    // Step 4.3: Constructor checks if marks are valid
+    public Student(int id, String name, double marks) throws InvalidMarks {
         this.id = id;
         this.name = name;
-        this.marks = marks;
+        if (marks > 0) {
+            this.marks = marks;
+        } else {
+            throw new InvalidMarks();  // throw custom exception if invalid
+        }
     }
 
+    // Step 4.4: Method to display student info
     public void display() {
         System.out.println("ID: " + id + "\nName: " + name + "\nMarks: " + marks);
     }
 }
 
-// Main class
-public class StudentManagementSystem {
+// Step 5: Main Student Management System class
+public class StudentManagementSystem extends Exception {
 
-    static ArrayList<Student> students = new ArrayList<>();
-    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Student> students = new ArrayList<>(); // Stores student objects
+    static Scanner sc = new Scanner(System.in);             // Reads user input
 
-    // Add student
+    // Step 6: Add Student Method
     public static void addStudent() {
-        System.out.print("Enter ID: ");
-        int id = sc.nextInt();
-        sc.nextLine(); // consume newline
+        try {
+            System.out.print("Enter ID: ");
+            int id = sc.nextInt();
+            sc.nextLine();  // consume newline
 
-        System.out.print("Enter Name: ");
-        String name = sc.nextLine();
+            System.out.print("Enter Name: ");
+            String name = sc.nextLine();
 
-        System.out.print("Enter Marks: ");
-        double marks = sc.nextDouble();
+            System.out.print("Enter Marks: ");
+            double marks = sc.nextDouble();
 
-        students.add(new Student(id, name, marks));
-        System.out.println("Student added successfully!");
+            students.add(new Student(id, name, marks)); // Add to list if valid
+            System.out.println("Student added successfully!");
+        } catch (InputMismatchException e) {
+            System.out.println("Enter Valid Input...!");
+            sc.nextLine();  // Clear buffer
+            menu();         // Restart menu
+        } catch (InvalidMarks e) {
+            System.out.println("Enter Valid Marks...!");
+            menu();         // Restart menu
+        }
     }
 
-    // View students
+    // Step 7: View Students
     public static void viewStudents() {
         if (students.isEmpty()) {
             System.out.println("No student records found.");
@@ -50,51 +71,70 @@ public class StudentManagementSystem {
         }
         System.out.println("Student List:");
         for (Student s : students) {
-            s.display();
-            //System.out.println();
+            s.display(); // Call display on each object
         }
     }
 
-    // Update student
-    public static void updateStudent() {
-        System.out.print("Enter ID of student to update: ");
-        int id = sc.nextInt();
-        boolean found = false;
+    // Step 8: Update Student
+    public static void updateStudent() throws InvalidMarks {
+        try {
+            System.out.print("Enter ID of student to update: ");
+            int id = sc.nextInt();
+            boolean found = false;
 
-        for (Student s : students) {
-            if (s.id == id) {
-                sc.nextLine(); // consume newline
-                System.out.print("Enter new Name: ");
-                s.name = sc.nextLine();
+            for (Student s : students) {
+                if (s.id == id) {
+                    sc.nextLine(); // consume newline
+                    System.out.print("Enter new Name: ");
+                    s.name = sc.nextLine();
 
-                System.out.print("Enter new Marks: ");
-                s.marks = sc.nextDouble();
+                    System.out.print("Enter new Marks: ");
+                    s.marks = sc.nextDouble();
 
-                System.out.println("Student updated successfully!");
-                found = true;
-                break;
+                    if (s.marks > 0) {
+                        // Valid marks, update continues
+                    } else {
+                        throw new InvalidMarks(); // Invalid marks
+                    }
+
+                    System.out.println("Student updated successfully!");
+                    found = true;
+                    break;
+                }
             }
-        }
 
-        if (!found) {
-            System.out.println("Student with ID " + id + " not found.");
+            if (!found) {
+                System.out.println("Student with ID " + id + " not found.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Enter Valid Input...!");
+            sc.nextLine();
+            menu();
         }
     }
 
-    // Delete student
+    // Step 9: Delete Student
     public static void deleteStudent() {
-        System.out.print("Enter ID of student to delete: ");
-        int id = sc.nextInt();
-        boolean removed = students.removeIf(s -> s.id == id);
+        try {
+            System.out.print("Enter ID of student to delete: ");
+            int id = sc.nextInt();
 
-        if (removed) {
-            System.out.println("Student deleted successfully!");
-        } else {
-            System.out.println("Student with ID " + id + " not found.");
+            // Remove student if ID matches
+            boolean removed = students.removeIf(s -> s.id == id);
+
+            if (removed) {
+                System.out.println("Student deleted successfully!");
+            } else {
+                System.out.println("Student with ID " + id + " not found.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Enter Valid Input...!");
+            sc.nextLine();
+            menu();
         }
     }
 
-    // Menu
+    // Step 3: Main menu loop
     public static void menu() {
         while (true) {
             System.out.println("\n===== Student Record Management System =====");
@@ -104,24 +144,34 @@ public class StudentManagementSystem {
             System.out.println("4. Delete Student");
             System.out.println("5. Exit");
             System.out.print("Choose an option: ");
+
             int choice = sc.nextInt();
 
             switch (choice) {
-                case 1: addStudent(); break;
-                case 2: viewStudents(); break;
-                case 3: updateStudent(); break;
-                case 4: deleteStudent(); break;
-                case 5: 
+                case 1:
+                    addStudent(); break;
+                case 2:
+                    viewStudents(); break;
+                case 3:
+                    try {
+                        updateStudent(); break;
+                    } catch (InvalidMarks e) {
+                        System.out.println("Enter Valid Marks...!");
+                        menu(); // go back to menu
+                    }
+                case 4:
+                    deleteStudent(); break;
+                case 5:
                     System.out.println("Exiting program.");
                     System.exit(0);
-                default: 
+                default:
                     System.out.println("Invalid choice. Try again.");
             }
         }
     }
 
-    // Main method
+    // Step 1: Main method – program starts here
     public static void main(String[] args) {
-        menu();
+        menu(); // Start menu
     }
 }
