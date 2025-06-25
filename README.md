@@ -4,119 +4,113 @@ sathetejas111@gmail.com
 Pune, Maharashtra, India
 
 
-#Student Record Management System (Java CLI Project)
+# 🎓 Student Record Management System (Java)
 
-This is a simple **Command-Line Interface (CLI)** based **Student Record Management System** built using **Core Java**. It allows users to **Add**, **View**, **Update**, and **Delete** student records stored in memory using an `ArrayList`.
-
----
-
-#Project Description
-
-This mini project simulates a basic student management application for educational or practice purposes. It demonstrates the use of:
-- Object-Oriented Programming (OOP) in Java,
-- Dynamic data structures like `ArrayList`,
-- User interaction via `Scanner`,
-- CRUD operations using loop structures and conditional logic.
-
-The application runs in the terminal, providing a menu-based interface for users to interact with student records.
+This is a simple **console-based Java application** for managing student records using object-oriented programming and custom exception handling. It allows users to perform **CRUD operations** (Create, Read, Update, Delete) on student data, with input validation and proper user prompts.
 
 ---
 
-#Folder Structure
+#Features
+
+- Add Student with validation (no negative marks)
+- View all students
+- Update student details by ID
+- Delete student by ID
+- Input validation using custom exception `InvalidMarks`
+- Reusable menu-driven loop
+- Graceful error handling (`InputMismatchException`, `InvalidMarks`)
+
+#Project Structure
+
 com.elevate_Internship_day_2/
-│
-├── Student.java // Student class: defines data and display method
-└── StudentManagementSystem.java // Main class with all menu options and operations
+├── StudentManagementSystem.java # Main class with menu and logic
+├── Student # Student class with display method and validation
+└── InvalidMarks # Custom exception class
+
+#Technologies Used
+
+- Java SE (Standard Edition)
+- OOP (Object-Oriented Programming)
+- Exception Handling
+- Collections API (`ArrayList`)
+- CLI (Command Line Interface)
+
+#How It Works
+
+#Step-by-Step Execution
+
+1. Program starts from `main()` and calls `menu()`.
+2. User is presented with 5 options:
+    - 1 Add Student
+    - 2 View Students
+    - 3 Update Student
+    - 4 Delete Student
+    - 5 Exit
+3. User chooses an option by entering a number.
+4. Input is taken using `Scanner`.
+5. Validation ensures:
+    - ID and marks are numeric.
+    - Marks are greater than 0 (else `InvalidMarks` is thrown).
+6. Based on the choice, the corresponding method is executed.
+7. If an exception is encountered, it is caught and a proper message is shown.
 
 
-## ✅ Features
-
-| Function        | Description |
-|----------------|-------------|
-| Add Student     | Input student ID, name, and marks to add a new record |
-| View Students   | List all students and their details |
-| Update Student  | Modify existing student's name and marks by ID |
-| Delete Student  | Remove a student record by ID |
-| Exit Program    | Terminates the application |
-
----
-
-#How to Run the Program
-
-#Prerequisites:
-- JDK 8 or later installed
-- Java IDE (IntelliJ, VS Code, Eclipse) or terminal setup
-
-#Steps:
-1. Clone or download this repository.
-2. Open in your Java IDE or terminal.
-3. Navigate to the folder containing `StudentManagementSystem.java`.
-4. Compile and run:
-
--bash
-javac StudentManagementSystem.java
-java StudentManagementSystem
-
-
-#simple optput
+#Sample Console Run
 
 ===== Student Record Management System =====
-1. Add Student
-2. View Students
-3. Update Student
-4. Delete Student
-5. Exit
+
+Add Student
+
+View Students
+
+Update Student
+
+Delete Student
+
+Exit
 Choose an option: 1
-
-Enter ID: 101
-
-Enter Name: Tejas
-
-Enter Marks: 88.5
-
-Student added successfully!
-
-===== Student Record Management System =====
-Choose an option: 2
-
-Student List:
-
-ID: 101
-
-Name: Tejas
-
-Marks: 88.5
-
-#Example Run
-
-===== Student Record Management System =====
-1. Add Student
-2. View Students
-3. Update Student
-4. Delete Student
-5. Exit
-Choose an option: 1
-
 Enter ID: 101
 Enter Name: Tejas
-Enter Marks: -10
+Enter Marks: -5
 Enter Valid Marks...!
 
 ===== Student Record Management System =====
-Choose an option: 1
 
+Add Student
+
+View Students
+Choose an option: 1
 Enter ID: 101
 Enter Name: Tejas
 Enter Marks: 85
 Student added successfully!
 
+#Custom Exception: `InvalidMarks`
 
-#Concepts Practiced
+This exception is used to ensure that students cannot be added or updated with marks ≤ 0.
 
--Java Classes and Objects
--ArrayList usage for dynamic data storage
--Menu-driven interface using loops and switch-case
--Data validation and basic error handling
--Scanner class for user input
--Iterator/for-each loop logic for data retrieval
+---java
+class InvalidMarks extends Exception {
+    // No logic required. It just signals invalid data
+}
+
+#Input Validation
+Condition	Handled by
+Non-numeric input	InputMismatchException
+Marks ≤ 0	InvalidMarks (custom exception)
+
+#Requirements
+-Java JDK 8 or higher
+-IDE (IntelliJ, Eclipse, VS Code) or terminal
+
+#How to Run
+-Clone or download the project folder.
+-Open the folder in your IDE.
+-Compile and run StudentManagementSystem.java.
+
+#Future Improvements
+-File handling to store records persistently.
+-GUI version using JavaFX or Swing.
+-Sorting and filtering functionality.
+-Search by name or range of marks.
 
