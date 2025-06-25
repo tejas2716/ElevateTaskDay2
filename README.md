@@ -1,10 +1,12 @@
 
-Tejas Tukaram Sathe
-sathetejas111@gmail.com
-Pune, Maharashtra, India
 
 
-# 🎓 Student Record Management System (Java)
+
+===Welcome Student Record Management System (Java)===
+
+#Developed by: Tejas Sathe
+#MailId - sathetejas111@gmail.com
+
 
 This is a simple **console-based Java application** for managing student records using object-oriented programming and custom exception handling. It allows users to perform **CRUD operations** (Create, Read, Update, Delete) on student data, with input validation and proper user prompts.
 
