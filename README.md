@@ -87,6 +87,30 @@ Name: Tejas
 
 Marks: 88.5
 
+#Example Run
+
+===== Student Record Management System =====
+1. Add Student
+2. View Students
+3. Update Student
+4. Delete Student
+5. Exit
+Choose an option: 1
+
+Enter ID: 101
+Enter Name: Tejas
+Enter Marks: -10
+Enter Valid Marks...!
+
+===== Student Record Management System =====
+Choose an option: 1
+
+Enter ID: 101
+Enter Name: Tejas
+Enter Marks: 85
+Student added successfully!
+
+
 #Concepts Practiced
 
 -Java Classes and Objects
