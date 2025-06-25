@@ -2,7 +2,7 @@
 
 
 
-===Welcome Student Record Management System (Java)===
+===Welcome to Student Record Management System (Java)===
 
 #Developed by: Tejas Sathe
 #MailId - sathetejas111@gmail.com
